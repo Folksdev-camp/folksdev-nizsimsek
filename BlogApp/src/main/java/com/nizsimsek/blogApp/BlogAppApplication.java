@@ -1,4 +1,4 @@
-package com.nizsimsek.BlogApp;
+package com.nizsimsek.blogApp;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

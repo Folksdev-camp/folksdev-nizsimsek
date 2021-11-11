@@ -1,4 +1,4 @@
-package com.nizsimsek.BlogApp;
+package com.nizsimsek.blogApp;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
