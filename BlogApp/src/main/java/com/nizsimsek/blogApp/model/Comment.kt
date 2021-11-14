@@ -4,6 +4,7 @@ import org.hibernate.Hibernate
 import org.hibernate.annotations.GenericGenerator
 import java.time.LocalDateTime
 import javax.persistence.*
+import javax.validation.constraints.Max
 
 @Entity
 data class Comment @JvmOverloads constructor(
@@ -12,17 +13,26 @@ data class Comment @JvmOverloads constructor(
         @GeneratedValue(generator = "UUID")
         @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
         val id: String? = "",
+
+        @Column(length = 5000)
         val content: String,
+
+        @Max(Long.MAX_VALUE)
+        val likes: Int,
         val createdDate: LocalDateTime = LocalDateTime.now(),
         val updatedDate: LocalDateTime = LocalDateTime.now(),
 
-        @ManyToOne(fetch = FetchType.LAZY, cascade = [CascadeType.ALL])
-        @JoinColumn(name = "post_id", referencedColumnName = "id", nullable = false)
+        @ManyToOne(fetch = FetchType.LAZY)
+        @JoinColumn(name = "user_id", referencedColumnName = "id")
+        val author: User,
+
+        @ManyToOne(fetch = FetchType.LAZY)
+        @JoinColumn(name = "post_id", referencedColumnName = "id")
         val post: Post,
 
-        @ManyToOne(fetch = FetchType.LAZY, cascade = [CascadeType.ALL])
-        @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
-        val user: User,
+        @OneToMany(mappedBy = "comment", fetch = FetchType.LAZY, cascade = [CascadeType.ALL])
+        val subComments: List<SubComment>? = ArrayList()
+
 ) {
         override fun equals(other: Any?): Boolean {
                 if (this === other) return true
@@ -36,6 +46,6 @@ data class Comment @JvmOverloads constructor(
 
         @Override
         override fun toString(): String {
-                return this::class.simpleName + "(content = $content , createdDate = $createdDate , updatedDate = $updatedDate )"
+                return this::class.simpleName + "(content = $content , likes = $likes , createdDate = $createdDate , updatedDate = $updatedDate )"
         }
 }

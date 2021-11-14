@@ -7,13 +7,12 @@ import javax.persistence.*
 import javax.validation.constraints.Max
 
 @Entity
-data class Post @JvmOverloads constructor(
+data class SubComment @JvmOverloads constructor(
 
         @Id
         @GeneratedValue(generator = "UUID")
         @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
         val id: String? = "",
-        val title: String,
 
         @Column(length = 5000)
         val content: String,
@@ -21,23 +20,25 @@ data class Post @JvmOverloads constructor(
         @Max(Long.MAX_VALUE)
         val likes: Int,
         val createdDate: LocalDateTime = LocalDateTime.now(),
-        val updatedDate: LocalDateTime? = LocalDateTime.now(),
+        val updatedDate: LocalDateTime = LocalDateTime.now(),
 
         @ManyToOne(fetch = FetchType.LAZY)
         @JoinColumn(name = "user_id", referencedColumnName = "id")
         val author: User,
 
-        @OneToMany(mappedBy = "post", fetch = FetchType.LAZY, cascade = [CascadeType.ALL])
-        val comments: List<Comment>? = ArrayList(),
+        @ManyToOne(fetch = FetchType.LAZY)
+        @JoinColumn(name = "post_id", referencedColumnName = "id")
+        val post: Post,
 
-        @OneToMany(mappedBy = "post", fetch = FetchType.LAZY, cascade = [CascadeType.ALL])
-        val subComments: List<SubComment>? = ArrayList()
+        @ManyToOne(fetch = FetchType.LAZY)
+        @JoinColumn(name = "comment_id", referencedColumnName = "id")
+        val comment: Comment
 
 ) {
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (other == null || Hibernate.getClass(this) != Hibernate.getClass(other)) return false
-        other as Post
+        other as SubComment
 
         return id != null && id == other.id
     }
@@ -46,6 +47,6 @@ data class Post @JvmOverloads constructor(
 
     @Override
     override fun toString(): String {
-        return this::class.simpleName + "(title = $title , content = $content , likes = $likes , createdDate = $createdDate , updatedDate = $updatedDate )"
+        return this::class.simpleName + "(content = $content , likes = $likes , createdDate = $createdDate , updatedDate = $updatedDate )"
     }
 }

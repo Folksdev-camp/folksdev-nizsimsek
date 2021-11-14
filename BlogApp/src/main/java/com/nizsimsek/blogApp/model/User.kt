@@ -18,10 +18,14 @@ data class User @JvmOverloads constructor(
         val password: String,
 
         @OneToMany(mappedBy = "author", fetch = FetchType.LAZY, cascade = [CascadeType.ALL])
-        val posts: List<Post>,
+        val posts: List<Post>? = ArrayList(),
 
-        @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = [CascadeType.ALL])
-        val comments: List<Comment>,
+        @OneToMany(mappedBy = "author", fetch = FetchType.LAZY, cascade = [CascadeType.ALL])
+        val comments: List<Comment>? = ArrayList(),
+
+        @OneToMany(mappedBy = "author", fetch = FetchType.LAZY, cascade = [CascadeType.ALL])
+        val subComments: List<SubComment>? = ArrayList()
+
 ) {
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
@@ -35,6 +39,6 @@ data class User @JvmOverloads constructor(
 
     @Override
     override fun toString(): String {
-        return this::class.simpleName + "(username = $username , firstName = $firstName , lastName = $lastName)"
+        return this::class.simpleName + "(username = $username , email = $email , firstName = $firstName , lastName = $lastName )"
     }
 }
