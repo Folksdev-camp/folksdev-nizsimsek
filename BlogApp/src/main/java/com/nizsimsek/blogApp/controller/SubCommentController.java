@@ -1,6 +1,7 @@
 package com.nizsimsek.blogApp.controller;
 
 import com.nizsimsek.blogApp.dto.SubCommentDto;
+import com.nizsimsek.blogApp.dto.SubCommentDto;
 import com.nizsimsek.blogApp.dto.request.*;
 import com.nizsimsek.blogApp.service.SubCommentService;
 import org.springframework.http.ResponseEntity;
@@ -39,8 +40,29 @@ public class SubCommentController {
         return ResponseEntity.ok(subCommentService.updateSubComment(id, updateSubCommentReq));
     }
 
+    @PatchMapping(value = "/{id}/like")
+    public ResponseEntity<SubCommentDto> likeSubComment(@PathVariable String id) {
+        return ResponseEntity.ok(subCommentService.likeSubCommentById(id));
+    }
+
+    @PatchMapping(value = "/{id}/unlike")
+    public ResponseEntity<SubCommentDto> unlikeSubComment(@PathVariable String id) {
+        return ResponseEntity.ok(subCommentService.unlikeSubCommentById(id));
+    }
+
+    @PatchMapping(value = "/{id}/dislike")
+    public ResponseEntity<SubCommentDto> dislikeSubComment(@PathVariable String id) {
+        return ResponseEntity.ok(subCommentService.dislikeSubCommentById(id));
+    }
+
+    @PatchMapping(value = "/{id}/undislike")
+    public ResponseEntity<SubCommentDto> undislikeSubComment(@PathVariable String id) {
+        return ResponseEntity.ok(subCommentService.undislikeSubCommentById(id));
+    }
+
     @DeleteMapping(value = "/{id}")
-    public void deleteSubComment(@PathVariable String id) {
+    public ResponseEntity<String> deleteSubComment(@PathVariable String id) {
         subCommentService.deleteSubCommentById(id);
+        return ResponseEntity.ok("SubComment deleted..");
     }
 }

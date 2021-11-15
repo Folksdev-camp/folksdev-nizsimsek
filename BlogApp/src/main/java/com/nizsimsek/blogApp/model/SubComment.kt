@@ -18,17 +18,16 @@ data class SubComment @JvmOverloads constructor(
         val content: String,
 
         @Max(Long.MAX_VALUE)
-        val likes: Int,
+        val likes: Long = 0,
+
+        @Max(Long.MAX_VALUE)
+        val dislikes: Long = 0,
         val createdDate: LocalDateTime = LocalDateTime.now(),
         val updatedDate: LocalDateTime = LocalDateTime.now(),
 
         @ManyToOne(fetch = FetchType.LAZY)
         @JoinColumn(name = "user_id", referencedColumnName = "id")
         val author: User,
-
-        @ManyToOne(fetch = FetchType.LAZY)
-        @JoinColumn(name = "post_id", referencedColumnName = "id")
-        val post: Post,
 
         @ManyToOne(fetch = FetchType.LAZY)
         @JoinColumn(name = "comment_id", referencedColumnName = "id")
@@ -47,6 +46,6 @@ data class SubComment @JvmOverloads constructor(
 
     @Override
     override fun toString(): String {
-        return this::class.simpleName + "(content = $content , likes = $likes , createdDate = $createdDate , updatedDate = $updatedDate )"
+        return this::class.simpleName + "(content = $content , likes = $likes , dislikes = $dislikes , createdDate = $createdDate , updatedDate = $updatedDate )"
     }
 }

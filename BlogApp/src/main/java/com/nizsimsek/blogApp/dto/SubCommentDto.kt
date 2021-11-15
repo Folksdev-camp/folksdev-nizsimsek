@@ -7,7 +7,8 @@ data class SubCommentDto @JvmOverloads constructor(
 
         val id: String?,
         val content: String,
-        val like: Int,
+        val like: Long,
+        val dislike: Long,
         val createdDate: LocalDateTime,
 
         @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -15,9 +16,6 @@ data class SubCommentDto @JvmOverloads constructor(
 
         @JsonInclude(JsonInclude.Include.NON_NULL)
         val author: UserDto? = null,
-
-        @JsonInclude(JsonInclude.Include.NON_NULL)
-        val post: PostDto? = null,
 
         @JsonInclude(JsonInclude.Include.NON_NULL)
         val comment: CommentDto? = null

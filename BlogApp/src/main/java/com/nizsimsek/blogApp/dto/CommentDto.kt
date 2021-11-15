@@ -7,7 +7,8 @@ data class CommentDto @JvmOverloads constructor(
 
         val id: String?,
         val content: String,
-        val like: Int,
+        val like: Long,
+        val dislike: Long,
         val createdDate: LocalDateTime,
 
         @JsonInclude(JsonInclude.Include.NON_NULL)

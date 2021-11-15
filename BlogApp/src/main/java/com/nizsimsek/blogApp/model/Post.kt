@@ -19,19 +19,27 @@ data class Post @JvmOverloads constructor(
         val content: String,
 
         @Max(Long.MAX_VALUE)
-        val likes: Int,
+        val likes: Long = 0,
+
+        @Max(Long.MAX_VALUE)
+        val dislikes: Long = 0,
         val createdDate: LocalDateTime = LocalDateTime.now(),
         val updatedDate: LocalDateTime? = LocalDateTime.now(),
+
+        @ManyToMany(fetch = FetchType.LAZY)
+        @JoinTable(
+                name = "post_categories",
+                joinColumns = [JoinColumn(name = "post_id", referencedColumnName = "id")],
+                inverseJoinColumns = [JoinColumn(name = "category_id", referencedColumnName = "id")]
+        )
+        val category: List<Category>,
 
         @ManyToOne(fetch = FetchType.LAZY)
         @JoinColumn(name = "user_id", referencedColumnName = "id")
         val author: User,
 
         @OneToMany(mappedBy = "post", fetch = FetchType.LAZY, cascade = [CascadeType.ALL])
-        val comments: List<Comment>? = ArrayList(),
-
-        @OneToMany(mappedBy = "post", fetch = FetchType.LAZY, cascade = [CascadeType.ALL])
-        val subComments: List<SubComment>? = ArrayList()
+        val comments: List<Comment>? = ArrayList()
 
 ) {
     override fun equals(other: Any?): Boolean {
@@ -46,6 +54,6 @@ data class Post @JvmOverloads constructor(
 
     @Override
     override fun toString(): String {
-        return this::class.simpleName + "(title = $title , content = $content , likes = $likes , createdDate = $createdDate , updatedDate = $updatedDate )"
+        return this::class.simpleName + "(title = $title , content = $content , likes = $likes , dislikes = $dislikes , createdDate = $createdDate , updatedDate = $updatedDate )"
     }
 }

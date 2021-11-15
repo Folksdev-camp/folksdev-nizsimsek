@@ -15,6 +15,7 @@ public class CommentDtoConverter extends BaseDtoConverter{
                 comment.getId(),
                 comment.getContent(),
                 comment.getLikes(),
+                comment.getDislikes(),
                 comment.getCreatedDate(),
                 comment.getUpdatedDate(),
                 new UserDto(
@@ -29,7 +30,10 @@ public class CommentDtoConverter extends BaseDtoConverter{
                         comment.getPost().getTitle(),
                         comment.getPost().getContent(),
                         comment.getPost().getLikes(),
-                        comment.getPost().getCreatedDate()
+                        comment.getPost().getDislikes(),
+                        comment.getPost().getCreatedDate(),
+                        comment.getPost().getUpdatedDate(),
+                        getCategoryDtos(Objects.requireNonNull(comment.getPost().getCategory()))
                 ),
                 getSubCommentDtos(Objects.requireNonNull(comment.getSubComments()))
         );

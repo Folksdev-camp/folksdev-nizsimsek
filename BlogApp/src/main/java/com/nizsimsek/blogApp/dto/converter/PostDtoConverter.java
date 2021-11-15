@@ -16,8 +16,10 @@ public class PostDtoConverter extends BaseDtoConverter {
                 post.getTitle(),
                 post.getContent(),
                 post.getLikes(),
+                post.getDislikes(),
                 post.getCreatedDate(),
                 post.getUpdatedDate(),
+                getCategoryDtos((Objects.requireNonNull(post.getCategory()))),
                 new UserDto(
                         Objects.requireNonNull(post.getAuthor().getId()),
                         post.getAuthor().getUsername(),
@@ -25,8 +27,7 @@ public class PostDtoConverter extends BaseDtoConverter {
                         post.getAuthor().getFirstName(),
                         post.getAuthor().getLastName()
                 ),
-                getCommentDtos(Objects.requireNonNull(post.getComments())),
-                getSubCommentDtos(Objects.requireNonNull(post.getSubComments()))
+                getCommentDtos(Objects.requireNonNull(post.getComments()))
         );
     }
 }

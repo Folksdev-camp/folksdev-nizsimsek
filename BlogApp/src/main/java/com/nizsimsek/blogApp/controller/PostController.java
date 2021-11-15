@@ -39,8 +39,29 @@ public class PostController {
         return ResponseEntity.ok(postService.updatePost(id, updatePostReq));
     }
 
+    @PatchMapping(value = "/{id}/like")
+    public ResponseEntity<PostDto> likeComment(@PathVariable String id) {
+        return ResponseEntity.ok(postService.likePostById(id));
+    }
+
+    @PatchMapping(value = "/{id}/unlike")
+    public ResponseEntity<PostDto> unlikeComment(@PathVariable String id) {
+        return ResponseEntity.ok(postService.unlikePostById(id));
+    }
+
+    @PatchMapping(value = "/{id}/dislike")
+    public ResponseEntity<PostDto> dislikeComment(@PathVariable String id) {
+        return ResponseEntity.ok(postService.dislikePostById(id));
+    }
+
+    @PatchMapping(value = "/{id}/undislike")
+    public ResponseEntity<PostDto> undislikeComment(@PathVariable String id) {
+        return ResponseEntity.ok(postService.undislikePostById(id));
+    }
+
     @DeleteMapping(value = "/{id}")
-    public void deletePost(@PathVariable String id) {
+    public ResponseEntity<String> deletePost(@PathVariable String id) {
         postService.deletePostById(id);
+        return ResponseEntity.ok("Post deleted..");
     }
 }

@@ -10,6 +10,14 @@ import java.util.stream.Collectors;
 @Component
 public class BaseDtoConverter {
 
+    protected List<CategoryDto> getCategoryDtos(List<Category> categories) {
+        return categories.stream()
+                .map(category -> new CategoryDto(
+                        category.getName()
+                ))
+                .collect(Collectors.toList());
+    }
+
     protected List<PostDto> getPostDtos(List<Post> posts) {
         return posts.stream()
                 .map(post -> new PostDto(
@@ -17,8 +25,10 @@ public class BaseDtoConverter {
                         post.getTitle(),
                         post.getContent(),
                         post.getLikes(),
+                        post.getDislikes(),
                         post.getCreatedDate(),
-                        post.getUpdatedDate()
+                        post.getUpdatedDate(),
+                        getCategoryDtos(post.getCategory())
                         ))
                 .collect(Collectors.toList());
     }
@@ -29,6 +39,7 @@ public class BaseDtoConverter {
                         comment.getId(),
                         comment.getContent(),
                         comment.getLikes(),
+                        comment.getDislikes(),
                         comment.getCreatedDate(),
                         comment.getUpdatedDate()
                         ))
@@ -41,6 +52,7 @@ public class BaseDtoConverter {
                         subComment.getId(),
                         subComment.getContent(),
                         subComment.getLikes(),
+                        subComment.getDislikes(),
                         subComment.getCreatedDate(),
                         subComment.getUpdatedDate()
                         ))

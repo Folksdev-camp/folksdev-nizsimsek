@@ -39,7 +39,8 @@ public class UserService {
     public List<UserDto> getAllUsers() {
 
         return userRepository.findAll()
-                .stream().map(userDtoConverter::convert)
+                .stream()
+                .map(userDtoConverter::convert)
                 .collect(Collectors.toList());
     }
 
@@ -72,6 +73,7 @@ public class UserService {
     }
 
     protected User findUserById(String id) {
+
         return userRepository.findById(id)
                 .orElseThrow(() -> new GeneralNotFoundException("User could not find by id : " + id));
     }

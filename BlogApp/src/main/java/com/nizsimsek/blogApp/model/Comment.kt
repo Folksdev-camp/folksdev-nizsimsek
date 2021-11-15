@@ -18,7 +18,10 @@ data class Comment @JvmOverloads constructor(
         val content: String,
 
         @Max(Long.MAX_VALUE)
-        val likes: Int,
+        val likes: Long = 0,
+
+        @Max(Long.MAX_VALUE)
+        val dislikes: Long = 0,
         val createdDate: LocalDateTime = LocalDateTime.now(),
         val updatedDate: LocalDateTime = LocalDateTime.now(),
 
@@ -46,6 +49,6 @@ data class Comment @JvmOverloads constructor(
 
         @Override
         override fun toString(): String {
-                return this::class.simpleName + "(content = $content , likes = $likes , createdDate = $createdDate , updatedDate = $updatedDate )"
+                return this::class.simpleName + "(content = $content , likes = $likes , dislikes = $dislikes , createdDate = $createdDate , updatedDate = $updatedDate )"
         }
 }

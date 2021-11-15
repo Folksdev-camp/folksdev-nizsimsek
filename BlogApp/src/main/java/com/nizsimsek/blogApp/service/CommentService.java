@@ -37,7 +37,6 @@ public class CommentService {
 
     Comment comment = new Comment(
             createCommentReq.getContent(),
-            createCommentReq.getLike(),
             user,
             post
     );
@@ -48,7 +47,8 @@ public class CommentService {
     public List<CommentDto> getAllComments() {
 
         return commentRepository.findAll()
-                .stream().map(commentDtoConverter::convert)
+                .stream()
+                .map(commentDtoConverter::convert)
                 .collect(Collectors.toList());
     }
 
@@ -65,11 +65,12 @@ public class CommentService {
                 comment.getId(),
                 updateCommentReq.getContent(),
                 comment.getLikes(),
+                comment.getDislikes(),
                 comment.getCreatedDate(),
                 LocalDateTime.now(),
                 comment.getAuthor(),
                 comment.getPost(),
-                comment.getSubComments()
+                Objects.requireNonNull(comment.getSubComments())
         );
 
         return commentDtoConverter.convert(commentRepository.save(updatedComment));
@@ -79,7 +80,101 @@ public class CommentService {
         commentRepository.deleteById(id);
     }
 
+    // BUSINESS LOGIC FOR COMMENT LIKE AND DISLIKE
+    public CommentDto likeCommentById(String id) {
+
+        Comment comment = findCommentById(id);
+        long likeCount = comment.getLikes();
+        if (likeCount >= 0) {
+            likeCount += 1;
+        }
+
+        Comment updatedComment = new Comment(
+                comment.getId(),
+                comment.getContent(),
+                likeCount,
+                comment.getDislikes(),
+                comment.getCreatedDate(),
+                comment.getUpdatedDate(),
+                comment.getAuthor(),
+                comment.getPost(),
+                comment.getSubComments()
+        );
+
+        return commentDtoConverter.convert(commentRepository.save(updatedComment));
+    }
+
+    public CommentDto unlikeCommentById(String id) {
+
+        Comment comment = findCommentById(id);
+        long likeCount = comment.getLikes();
+        if (likeCount > 0) {
+            likeCount -= 1;
+        }
+
+        Comment updatedComment = new Comment(
+                comment.getId(),
+                comment.getContent(),
+                likeCount,
+                comment.getDislikes(),
+                comment.getCreatedDate(),
+                comment.getUpdatedDate(),
+                comment.getAuthor(),
+                comment.getPost(),
+                comment.getSubComments()
+        );
+
+        return commentDtoConverter.convert(commentRepository.save(updatedComment));
+    }
+
+    public CommentDto dislikeCommentById(String id) {
+
+        Comment comment = findCommentById(id);
+        long dislikeCount = comment.getLikes();
+        if (dislikeCount >= 0) {
+            dislikeCount += 1;
+        }
+
+        Comment updatedComment = new Comment(
+                comment.getId(),
+                comment.getContent(),
+                comment.getLikes(),
+                dislikeCount,
+                comment.getCreatedDate(),
+                comment.getUpdatedDate(),
+                comment.getAuthor(),
+                comment.getPost(),
+                comment.getSubComments()
+        );
+
+        return commentDtoConverter.convert(commentRepository.save(updatedComment));
+    }
+
+    public CommentDto undislikeCommentById(String id) {
+
+        Comment comment = findCommentById(id);
+        long dislikeCount = comment.getLikes();
+        if (dislikeCount > 0) {
+            dislikeCount -= 1;
+        }
+
+        Comment updatedComment = new Comment(
+                comment.getId(),
+                comment.getContent(),
+                comment.getLikes(),
+                dislikeCount,
+                comment.getCreatedDate(),
+                comment.getUpdatedDate(),
+                comment.getAuthor(),
+                comment.getPost(),
+                comment.getSubComments()
+        );
+
+        return commentDtoConverter.convert(commentRepository.save(updatedComment));
+    }
+
     protected Comment findCommentById(String id) {
+
         return commentRepository.findById(id)
                 .orElseThrow(() -> new GeneralNotFoundException("Comment could not find by id : " + id));
     }
