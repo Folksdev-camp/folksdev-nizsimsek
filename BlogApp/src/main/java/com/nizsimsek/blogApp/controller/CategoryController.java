@@ -2,7 +2,8 @@ package com.nizsimsek.blogApp.controller;
 
 
 import com.nizsimsek.blogApp.dto.CategoryDto;
-import com.nizsimsek.blogApp.dto.request.*;
+import com.nizsimsek.blogApp.dto.request.CreateCategoryReq;
+import com.nizsimsek.blogApp.dto.request.UpdateCategoryReq;
 import com.nizsimsek.blogApp.service.CategoryService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

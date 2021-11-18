@@ -1,7 +1,8 @@
 package com.nizsimsek.blogApp.controller;
 
 import com.nizsimsek.blogApp.dto.UserDto;
-import com.nizsimsek.blogApp.dto.request.*;
+import com.nizsimsek.blogApp.dto.request.CreateUserReq;
+import com.nizsimsek.blogApp.dto.request.UpdateUserReq;
 import com.nizsimsek.blogApp.service.UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

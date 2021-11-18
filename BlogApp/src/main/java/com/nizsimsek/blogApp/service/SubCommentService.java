@@ -1,17 +1,18 @@
 package com.nizsimsek.blogApp.service;
 
-import com.nizsimsek.blogApp.dto.CommentDto;
 import com.nizsimsek.blogApp.dto.SubCommentDto;
 import com.nizsimsek.blogApp.dto.converter.SubCommentDtoConverter;
-import com.nizsimsek.blogApp.dto.request.*;
+import com.nizsimsek.blogApp.dto.request.CreateSubCommentReq;
+import com.nizsimsek.blogApp.dto.request.UpdateSubCommentReq;
 import com.nizsimsek.blogApp.exception.GeneralNotFoundException;
-import com.nizsimsek.blogApp.model.*;
+import com.nizsimsek.blogApp.model.Comment;
+import com.nizsimsek.blogApp.model.SubComment;
+import com.nizsimsek.blogApp.model.User;
 import com.nizsimsek.blogApp.repository.SubCommentRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class SubCommentService {
@@ -47,10 +48,7 @@ public class SubCommentService {
 
     public List<SubCommentDto> getAllSubComments() {
 
-        return subCommentRepository.findAll()
-                .stream()
-                .map(subCommentDtoConverter::convert)
-                .collect(Collectors.toList());
+        return subCommentDtoConverter.convertToSubCommentDtos(findAllComments());
     }
 
     public SubCommentDto getSubCommentById(String id) {
@@ -77,6 +75,7 @@ public class SubCommentService {
     }
 
     public void deleteSubCommentById(String id) {
+
         subCommentRepository.deleteById(id);
     }
 
@@ -169,7 +168,13 @@ public class SubCommentService {
         return subCommentDtoConverter.convert(subCommentRepository.save(updatedSubComment));
     }
 
+    protected List<SubComment> findAllComments() {
+
+        return subCommentRepository.findAll();
+    }
+
     protected SubComment findSubCommentById(String id) {
+
         return subCommentRepository.findById(id)
                 .orElseThrow(() -> new GeneralNotFoundException("SubComment could not find by id : " + id));
     }

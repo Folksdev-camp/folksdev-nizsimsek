@@ -1,7 +1,8 @@
 package com.nizsimsek.blogApp.controller;
 
 import com.nizsimsek.blogApp.dto.PostDto;
-import com.nizsimsek.blogApp.dto.request.*;
+import com.nizsimsek.blogApp.dto.request.CreatePostReq;
+import com.nizsimsek.blogApp.dto.request.UpdatePostReq;
 import com.nizsimsek.blogApp.service.PostService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

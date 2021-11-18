@@ -2,14 +2,16 @@ package com.nizsimsek.blogApp.service;
 
 import com.nizsimsek.blogApp.dto.CategoryDto;
 import com.nizsimsek.blogApp.dto.converter.CategoryDtoConverter;
-import com.nizsimsek.blogApp.dto.request.*;
+import com.nizsimsek.blogApp.dto.request.CreateCategoryReq;
+import com.nizsimsek.blogApp.dto.request.UpdateCategoryReq;
 import com.nizsimsek.blogApp.exception.GeneralNotFoundException;
 import com.nizsimsek.blogApp.model.Category;
 import com.nizsimsek.blogApp.repository.CategoryRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.List;
+import java.util.Optional;
+
 
 @Service
 public class CategoryService {
@@ -34,10 +36,7 @@ public class CategoryService {
 
     public List<CategoryDto> getAllCategories() {
 
-        return categoryRepository.findAll()
-                .stream()
-                .map(categoryDtoConverter::convert)
-                .collect(Collectors.toList());
+        return categoryDtoConverter.convertToCategoryDtos(findAllCategories());
     }
 
     public CategoryDto getCategoryById(String id) {
@@ -58,6 +57,7 @@ public class CategoryService {
     }
 
     public void deleteCategoryById(String id) {
+
         categoryRepository.deleteById(id);
     }
 
@@ -67,10 +67,15 @@ public class CategoryService {
                 .orElseThrow(() -> new GeneralNotFoundException("Category could not find by id : " + id));
     }
 
+    protected List<Category> findAllCategories() {
+
+        return categoryRepository.findAll();
+    }
+
     protected List<Category> getCategories(List<String> idList) {
 
         return Optional.of(categoryRepository.findAllByIdIn(idList))
                 .filter(category -> !category.isEmpty())
-                .orElse(Collections.emptyList());
+                .orElseThrow(() -> new GeneralNotFoundException("Kategori bulunamadı verilen idler : " + idList));
     }
 }

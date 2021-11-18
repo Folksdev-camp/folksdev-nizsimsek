@@ -2,15 +2,17 @@ package com.nizsimsek.blogApp.service;
 
 import com.nizsimsek.blogApp.dto.PostDto;
 import com.nizsimsek.blogApp.dto.converter.PostDtoConverter;
-import com.nizsimsek.blogApp.dto.request.*;
+import com.nizsimsek.blogApp.dto.request.CreatePostReq;
+import com.nizsimsek.blogApp.dto.request.UpdatePostReq;
 import com.nizsimsek.blogApp.exception.GeneralNotFoundException;
-import com.nizsimsek.blogApp.model.*;
+import com.nizsimsek.blogApp.model.Category;
+import com.nizsimsek.blogApp.model.Post;
+import com.nizsimsek.blogApp.model.User;
 import com.nizsimsek.blogApp.repository.PostRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.List;
 
 @Service
 public class PostService {
@@ -22,7 +24,8 @@ public class PostService {
 
     public PostService(PostRepository postRepository,
                        PostDtoConverter postDtoConverter,
-                       UserService userService, CategoryService categoryService) {
+                       UserService userService,
+                       CategoryService categoryService) {
         this.postRepository = postRepository;
         this.postDtoConverter = postDtoConverter;
         this.userService = userService;
@@ -32,12 +35,12 @@ public class PostService {
     public PostDto createPost(CreatePostReq createPostReq) {
 
         User user = userService.findUserById(createPostReq.getAuthorId());
-        List<Category> categories = categoryService.getCategories(createPostReq.getCategoryIds());
+        List<Category> categoryList = categoryService.getCategories(createPostReq.getCategoryIds());
 
         Post post = new Post(
                 createPostReq.getTitle(),
                 createPostReq.getContent(),
-                categories,
+                categoryList,
                 user
         );
 
@@ -46,10 +49,7 @@ public class PostService {
 
     public List<PostDto> getAllPosts() {
 
-        return postRepository.findAll()
-                .stream()
-                .map(postDtoConverter::convert)
-                .collect(Collectors.toList());
+        return postDtoConverter.convertToPostDtos(findAllPosts());
     }
 
     public PostDto getPostById(String id) {
@@ -79,6 +79,7 @@ public class PostService {
     }
 
     public void deletePostById(String id) {
+
         postRepository.deleteById(id);
     }
 
@@ -177,6 +178,11 @@ public class PostService {
         );
 
         return postDtoConverter.convert(postRepository.save(updatedPost));
+    }
+
+    protected List<Post> findAllPosts() {
+
+        return postRepository.findAll();
     }
 
     protected Post findPostById(String id) {

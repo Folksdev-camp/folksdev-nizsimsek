@@ -1,6 +1,6 @@
 package com.nizsimsek.blogApp.dto.request
 
-import javax.validation.constraints.*
+import javax.validation.constraints.NotBlank
 
 data class CreateCommentReq (
 

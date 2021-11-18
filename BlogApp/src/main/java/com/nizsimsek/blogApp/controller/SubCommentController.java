@@ -1,8 +1,8 @@
 package com.nizsimsek.blogApp.controller;
 
 import com.nizsimsek.blogApp.dto.SubCommentDto;
-import com.nizsimsek.blogApp.dto.SubCommentDto;
-import com.nizsimsek.blogApp.dto.request.*;
+import com.nizsimsek.blogApp.dto.request.CreateSubCommentReq;
+import com.nizsimsek.blogApp.dto.request.UpdateSubCommentReq;
 import com.nizsimsek.blogApp.service.SubCommentService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

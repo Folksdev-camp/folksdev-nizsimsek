@@ -2,14 +2,15 @@ package com.nizsimsek.blogApp.service;
 
 import com.nizsimsek.blogApp.dto.UserDto;
 import com.nizsimsek.blogApp.dto.converter.UserDtoConverter;
-import com.nizsimsek.blogApp.dto.request.*;
+import com.nizsimsek.blogApp.dto.request.CreateUserReq;
+import com.nizsimsek.blogApp.dto.request.UpdateUserReq;
 import com.nizsimsek.blogApp.exception.GeneralNotFoundException;
 import com.nizsimsek.blogApp.model.User;
 import com.nizsimsek.blogApp.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.List;
+
 
 @Service
 public class UserService {
@@ -38,10 +39,7 @@ public class UserService {
 
     public List<UserDto> getAllUsers() {
 
-        return userRepository.findAll()
-                .stream()
-                .map(userDtoConverter::convert)
-                .collect(Collectors.toList());
+        return userDtoConverter.convertToUserDtos(findAllUsers());
     }
 
     public UserDto getUserById(String id) {
@@ -70,6 +68,10 @@ public class UserService {
 
     public void deleteUserById(String id) {
         userRepository.deleteById(id);
+    }
+
+    protected List<User> findAllUsers() {
+        return userRepository.findAll();
     }
 
     protected User findUserById(String id) {

@@ -1,10 +1,13 @@
 package com.nizsimsek.blogApp.dto.converter;
 
-import com.nizsimsek.blogApp.dto.*;
+import com.nizsimsek.blogApp.dto.PostDto;
+import com.nizsimsek.blogApp.dto.UserDto;
 import com.nizsimsek.blogApp.model.Post;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Component
 public class PostDtoConverter extends BaseDtoConverter {
@@ -29,5 +32,13 @@ public class PostDtoConverter extends BaseDtoConverter {
                 ),
                 getCommentDtos(Objects.requireNonNull(post.getComments()))
         );
+    }
+
+    public List<PostDto> convertToPostDtos(List<Post> posts) {
+
+        return posts
+                .stream()
+                .map(this::convert)
+                .collect(Collectors.toList());
     }
 }

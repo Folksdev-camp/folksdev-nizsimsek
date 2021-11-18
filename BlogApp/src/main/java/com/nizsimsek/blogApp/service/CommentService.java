@@ -2,15 +2,18 @@ package com.nizsimsek.blogApp.service;
 
 import com.nizsimsek.blogApp.dto.CommentDto;
 import com.nizsimsek.blogApp.dto.converter.CommentDtoConverter;
-import com.nizsimsek.blogApp.dto.request.*;
+import com.nizsimsek.blogApp.dto.request.CreateCommentReq;
+import com.nizsimsek.blogApp.dto.request.UpdateCommentReq;
 import com.nizsimsek.blogApp.exception.GeneralNotFoundException;
-import com.nizsimsek.blogApp.model.*;
+import com.nizsimsek.blogApp.model.Comment;
+import com.nizsimsek.blogApp.model.Post;
+import com.nizsimsek.blogApp.model.User;
 import com.nizsimsek.blogApp.repository.CommentRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.List;
+import java.util.Objects;
 
 @Service
 public class CommentService {
@@ -46,10 +49,7 @@ public class CommentService {
 
     public List<CommentDto> getAllComments() {
 
-        return commentRepository.findAll()
-                .stream()
-                .map(commentDtoConverter::convert)
-                .collect(Collectors.toList());
+        return commentDtoConverter.convertToCommentDtos(findAllComments());
     }
 
     public CommentDto getCommentById(String id) {
@@ -77,6 +77,7 @@ public class CommentService {
     }
 
     public void deleteCommentById(String id) {
+
         commentRepository.deleteById(id);
     }
 
@@ -171,6 +172,11 @@ public class CommentService {
         );
 
         return commentDtoConverter.convert(commentRepository.save(updatedComment));
+    }
+
+    protected List<Comment> findAllComments() {
+
+        return commentRepository.findAll();
     }
 
     protected Comment findCommentById(String id) {

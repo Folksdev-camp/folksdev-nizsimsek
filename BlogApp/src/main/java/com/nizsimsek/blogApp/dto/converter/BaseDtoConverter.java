@@ -1,7 +1,13 @@
 package com.nizsimsek.blogApp.dto.converter;
 
-import com.nizsimsek.blogApp.dto.*;
-import com.nizsimsek.blogApp.model.*;
+import com.nizsimsek.blogApp.dto.CategoryDto;
+import com.nizsimsek.blogApp.dto.CommentDto;
+import com.nizsimsek.blogApp.dto.PostDto;
+import com.nizsimsek.blogApp.dto.SubCommentDto;
+import com.nizsimsek.blogApp.model.Category;
+import com.nizsimsek.blogApp.model.Comment;
+import com.nizsimsek.blogApp.model.Post;
+import com.nizsimsek.blogApp.model.SubComment;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
