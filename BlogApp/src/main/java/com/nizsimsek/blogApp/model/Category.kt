@@ -1,5 +1,6 @@
 package com.nizsimsek.blogApp.model
 
+import com.fasterxml.jackson.annotation.JsonIgnore
 import org.hibernate.Hibernate
 import org.hibernate.annotations.GenericGenerator
 import javax.persistence.*
@@ -14,6 +15,7 @@ data class Category @JvmOverloads constructor(
         val name: String,
 
         @ManyToMany(mappedBy = "category", fetch = FetchType.LAZY)
+        @JsonIgnore
         val post: List<Post>? = ArrayList()
 
 ) {

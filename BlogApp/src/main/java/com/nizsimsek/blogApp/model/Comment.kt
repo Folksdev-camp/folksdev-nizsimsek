@@ -1,5 +1,6 @@
 package com.nizsimsek.blogApp.model
 
+import com.fasterxml.jackson.annotation.JsonIgnore
 import org.hibernate.Hibernate
 import org.hibernate.annotations.GenericGenerator
 import java.time.LocalDateTime
@@ -34,6 +35,7 @@ data class Comment @JvmOverloads constructor(
         val post: Post,
 
         @OneToMany(mappedBy = "comment", fetch = FetchType.LAZY, cascade = [CascadeType.ALL])
+        @JsonIgnore
         val subComments: List<SubComment>? = ArrayList()
 
 ) {

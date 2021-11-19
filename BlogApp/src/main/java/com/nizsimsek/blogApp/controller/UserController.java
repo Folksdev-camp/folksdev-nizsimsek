@@ -11,7 +11,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/v1/user")
+@RequestMapping(value = "/v1/users")
 public class UserController {
 
     private final UserService userService;
@@ -36,12 +36,12 @@ public class UserController {
     }
 
     @PutMapping(value = "/{id}")
-    public ResponseEntity<UserDto> updateUser(@PathVariable String id, @RequestBody UpdateUserReq updateUserReq) {
+    public ResponseEntity<UserDto> updateUser(@PathVariable String id, @Valid @RequestBody UpdateUserReq updateUserReq) {
         return ResponseEntity.ok(userService.updateUser(id, updateUserReq));
     }
 
     @DeleteMapping(value = "/{id}")
-    public ResponseEntity<String> deleteUser(@PathVariable String id) {
+    public ResponseEntity<String> deleteUserById(@PathVariable String id) {
         userService.deleteUserById(id);
         return ResponseEntity.ok("User deleted..");
     }

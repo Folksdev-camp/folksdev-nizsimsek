@@ -18,7 +18,7 @@ public class TestSupport {
 
         return new User(
                 "username",
-                "email",
+                "username@email.com",
                 "firstName",
                 "lastName",
                 "password"
@@ -30,7 +30,7 @@ public class TestSupport {
         return new UserDto(
                 "id",
                 "username",
-                "email",
+                "username@email.com",
                 "firstName",
                 "lastName",
                 "password"
@@ -57,7 +57,7 @@ public class TestSupport {
 
         return new CreateUserReq(
                 "username",
-                "email",
+                "username@email.com",
                 "firstName",
                 "lastName",
                 "password"
@@ -68,7 +68,7 @@ public class TestSupport {
 
         return new UpdateUserReq(
                 "username",
-                "email",
+                "username@email.com",
                 "firstName",
                 "lastName",
                 "password"
@@ -130,7 +130,7 @@ public class TestSupport {
         User user = new User(
                 "id",
                 "username",
-                "email",
+                "username@email.com",
                 "firstName",
                 "lastName",
                 "password"
@@ -153,7 +153,7 @@ public class TestSupport {
         User user = new User(
                 "id",
                 "username",
-                "email",
+                "username@email.com",
                 "firstName",
                 "lastName",
                 "password"
@@ -179,7 +179,7 @@ public class TestSupport {
         UserDto userDto = new UserDto(
                 "id",
                 "username",
-                "email",
+                "username@email.com",
                 "firstName",
                 "lastName",
                 "password"
@@ -225,7 +225,7 @@ public class TestSupport {
         User user = new User(
                 "id",
                 "username",
-                "email",
+                "username@email.com",
                 "firstName",
                 "lastName",
                 "password"
@@ -276,7 +276,7 @@ public class TestSupport {
         User user = new User(
                 "id",
                 "username",
-                "email",
+                "username@email.com",
                 "firstName",
                 "lastName",
                 "password"
@@ -302,7 +302,7 @@ public class TestSupport {
         UserDto userDto = new UserDto(
                 "id",
                 "username",
-                "email",
+                "username@email.com",
                 "firstName",
                 "lastName",
                 "password"
@@ -356,7 +356,7 @@ public class TestSupport {
         User user = new User(
                 "id",
                 "username",
-                "email",
+                "username@email.com",
                 "firstName",
                 "lastName",
                 "password"
@@ -386,7 +386,14 @@ public class TestSupport {
     // SUBCOMMENT TEST SUPPORT
     public SubComment generateSubComment() {
 
-        User user = generateUser();
+        User user = new User(
+                "id",
+                "username",
+                "username@email.com",
+                "firstName",
+                "lastName",
+                "password"
+        );
         Comment comment = generateComment();
 
         return new SubComment(
@@ -401,7 +408,7 @@ public class TestSupport {
         User user = new User(
                 "id",
                 "username",
-                "email",
+                "username@email.com",
                 "firstName",
                 "lastName",
                 "password"

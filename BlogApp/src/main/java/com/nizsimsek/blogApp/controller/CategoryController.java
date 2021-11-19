@@ -12,7 +12,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/v1/category")
+@RequestMapping(value = "/v1/categories")
 public class CategoryController {
 
     private final CategoryService categoryService;
@@ -37,12 +37,12 @@ public class CategoryController {
     }
 
     @PutMapping(value = "/{id}")
-    public ResponseEntity<CategoryDto> updateCategory(@PathVariable String id, @RequestBody UpdateCategoryReq updateCategoryReq) {
+    public ResponseEntity<CategoryDto> updateCategory(@PathVariable String id, @Valid @RequestBody UpdateCategoryReq updateCategoryReq) {
         return ResponseEntity.ok(categoryService.updateCategory(id, updateCategoryReq));
     }
 
     @DeleteMapping(value = "/{id}")
-    public ResponseEntity<String> deleteCategory(@PathVariable String id) {
+    public ResponseEntity<String> deleteCategoryById(@PathVariable String id) {
         categoryService.deleteCategoryById(id);
         return ResponseEntity.ok("Category deleted..");
     }

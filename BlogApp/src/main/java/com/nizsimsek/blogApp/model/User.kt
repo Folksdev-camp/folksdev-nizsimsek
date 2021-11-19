@@ -1,5 +1,6 @@
 package com.nizsimsek.blogApp.model
 
+import com.fasterxml.jackson.annotation.JsonIgnore
 import org.hibernate.Hibernate
 import org.hibernate.annotations.GenericGenerator
 import javax.persistence.*
@@ -18,12 +19,15 @@ data class User @JvmOverloads constructor(
         val password: String,
 
         @OneToMany(mappedBy = "author", fetch = FetchType.LAZY, cascade = [CascadeType.ALL])
+        @JsonIgnore
         val posts: List<Post>? = ArrayList(),
 
         @OneToMany(mappedBy = "author", fetch = FetchType.LAZY, cascade = [CascadeType.ALL])
+        @JsonIgnore
         val comments: List<Comment>? = ArrayList(),
 
         @OneToMany(mappedBy = "author", fetch = FetchType.LAZY, cascade = [CascadeType.ALL])
+        @JsonIgnore
         val subComments: List<SubComment>? = ArrayList()
 
 ) {

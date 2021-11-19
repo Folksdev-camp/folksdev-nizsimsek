@@ -1,5 +1,6 @@
 package com.nizsimsek.blogApp.model
 
+import com.fasterxml.jackson.annotation.JsonIgnore
 import org.hibernate.Hibernate
 import org.hibernate.annotations.GenericGenerator
 import java.time.LocalDateTime
@@ -32,6 +33,7 @@ data class Post @JvmOverloads constructor(
                 joinColumns = [JoinColumn(name = "post_id", referencedColumnName = "id")],
                 inverseJoinColumns = [JoinColumn(name = "category_id", referencedColumnName = "id")]
         )
+        @JsonIgnore
         val category: List<Category>,
 
         @ManyToOne(fetch = FetchType.LAZY)
@@ -39,6 +41,7 @@ data class Post @JvmOverloads constructor(
         val author: User,
 
         @OneToMany(mappedBy = "post", fetch = FetchType.LAZY, cascade = [CascadeType.ALL])
+        @JsonIgnore
         val comments: List<Comment>? = ArrayList()
 
 ) {

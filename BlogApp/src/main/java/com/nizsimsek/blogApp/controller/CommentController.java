@@ -11,7 +11,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/v1/comment")
+@RequestMapping(value = "/v1/comments")
 public class CommentController {
 
     private final CommentService commentService;
@@ -36,32 +36,32 @@ public class CommentController {
     }
 
     @PutMapping(value = "/{id}")
-    public ResponseEntity<CommentDto> updateComment(@PathVariable String id, @RequestBody UpdateCommentReq updateCommentReq) {
+    public ResponseEntity<CommentDto> updateComment(@PathVariable String id, @Valid @RequestBody UpdateCommentReq updateCommentReq) {
         return ResponseEntity.ok(commentService.updateComment(id, updateCommentReq));
     }
 
-    @PatchMapping(value = "/{id}/like")
+    @PatchMapping(value = "/like/{id}")
     public ResponseEntity<CommentDto> likePost(@PathVariable String id) {
         return ResponseEntity.ok(commentService.likeCommentById(id));
     }
 
-    @PatchMapping(value = "/{id}/unlike")
+    @PatchMapping(value = "/unlike/{id}")
     public ResponseEntity<CommentDto> unlikePost(@PathVariable String id) {
         return ResponseEntity.ok(commentService.unlikeCommentById(id));
     }
 
-    @PatchMapping(value = "/{id}/dislike")
+    @PatchMapping(value = "/dislike/{id}")
     public ResponseEntity<CommentDto> dislikePost(@PathVariable String id) {
         return ResponseEntity.ok(commentService.dislikeCommentById(id));
     }
 
-    @PatchMapping(value = "/{id}/undislike")
+    @PatchMapping(value = "/undislike/{id}")
     public ResponseEntity<CommentDto> undislikePost(@PathVariable String id) {
         return ResponseEntity.ok(commentService.undislikeCommentById(id));
     }
 
     @DeleteMapping(value = "/{id}")
-    public ResponseEntity<String> deleteComment(@PathVariable String id) {
+    public ResponseEntity<String> deleteCommentById(@PathVariable String id) {
         commentService.deleteCommentById(id);
         return ResponseEntity.ok("Comment deleted..");
     }

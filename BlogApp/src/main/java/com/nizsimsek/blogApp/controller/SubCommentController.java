@@ -11,7 +11,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/v1/subcomment")
+@RequestMapping(value = "/v1/subcomments")
 public class SubCommentController {
 
     private final SubCommentService subCommentService;
@@ -36,32 +36,32 @@ public class SubCommentController {
     }
 
     @PutMapping(value = "/{id}")
-    public ResponseEntity<SubCommentDto> updateSubComment(@PathVariable String id, @RequestBody UpdateSubCommentReq updateSubCommentReq) {
+    public ResponseEntity<SubCommentDto> updateSubComment(@PathVariable String id, @Valid @RequestBody UpdateSubCommentReq updateSubCommentReq) {
         return ResponseEntity.ok(subCommentService.updateSubComment(id, updateSubCommentReq));
     }
 
-    @PatchMapping(value = "/{id}/like")
+    @PatchMapping(value = "/like/{id}")
     public ResponseEntity<SubCommentDto> likeSubComment(@PathVariable String id) {
         return ResponseEntity.ok(subCommentService.likeSubCommentById(id));
     }
 
-    @PatchMapping(value = "/{id}/unlike")
+    @PatchMapping(value = "/unlike/{id}")
     public ResponseEntity<SubCommentDto> unlikeSubComment(@PathVariable String id) {
         return ResponseEntity.ok(subCommentService.unlikeSubCommentById(id));
     }
 
-    @PatchMapping(value = "/{id}/dislike")
+    @PatchMapping(value = "/dislike/{id}")
     public ResponseEntity<SubCommentDto> dislikeSubComment(@PathVariable String id) {
         return ResponseEntity.ok(subCommentService.dislikeSubCommentById(id));
     }
 
-    @PatchMapping(value = "/{id}/undislike")
+    @PatchMapping(value = "/undislike/{id}")
     public ResponseEntity<SubCommentDto> undislikeSubComment(@PathVariable String id) {
         return ResponseEntity.ok(subCommentService.undislikeSubCommentById(id));
     }
 
     @DeleteMapping(value = "/{id}")
-    public ResponseEntity<String> deleteSubComment(@PathVariable String id) {
+    public ResponseEntity<String> deleteSubCommentById(@PathVariable String id) {
         subCommentService.deleteSubCommentById(id);
         return ResponseEntity.ok("SubComment deleted..");
     }
