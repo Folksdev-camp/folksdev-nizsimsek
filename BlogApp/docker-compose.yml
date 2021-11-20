@@ -1,0 +1,27 @@
+version: '3'
+
+services:
+  app:
+    image: 'blogapi:latest'
+    build:
+      context: .
+    container_name: BlogApi
+    depends_on:
+      - db
+    ports:
+      - '8080:8080'
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://db:3306/blogdb
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=root
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+
+  db:
+    image: 'mysql:latest'
+    container_name: db
+    environment:
+      - MYSQL_ROOT_USERNAME=root
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=blogdb
+    ports:
+      - '3307:3306'
