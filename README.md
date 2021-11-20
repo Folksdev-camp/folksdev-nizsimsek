@@ -33,11 +33,17 @@ Proje ana dizinine gidiniz.
 Tercihinize göre kurulum türü için aşağıdaki adımları takip ediniz.
 
 ### Maven Kurulumu
+
+---
+
 Maven ile çalıştırmak için komut satırına
 `mvn clean install` yazarak jar türünde dosya oluşturunuz.
 `mvn spring-boot:run` yazarak projeyi çalıştırınız.
 
 ### Docker Compose Kurulumu
+
+---
+
 Docker Compose ile çalıştırmak için komut satırına
 `docker build -t blogapi:latest .` yazarak docker image oluşturunuz.
 `docker-compose up` yazarak docker image oluşturunuz.
