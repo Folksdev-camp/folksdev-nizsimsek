@@ -45,9 +45,10 @@ Maven ile çalıştırmak için komut satırına
 ---
 
 Docker Compose ile çalıştırmak için komut satırına
+
 `docker build -t blogapi:latest .` yazarak docker image oluşturunuz.
-`docker-compose up` yazarak docker image oluşturunuz.
-Bu şekilde çalıştırdığınızda gerekli kurulumlar docker üzerinde yapılacaktır.
+`docker-compose up` yazarak docker image oluşturunuz. Bu şekilde çalıştırdığınızda gerekli kurulumlar docker üzerinde yapılacaktır.
+
 ---
 
 ## OpenAPI UI
