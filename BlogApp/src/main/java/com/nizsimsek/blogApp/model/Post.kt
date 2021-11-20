@@ -16,7 +16,6 @@ data class Post @JvmOverloads constructor(
         val id: String? = "",
         val title: String,
 
-        @Column(length = 5000)
         val content: String,
 
         @Max(Long.MAX_VALUE)
