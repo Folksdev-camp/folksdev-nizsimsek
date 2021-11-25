@@ -26,16 +26,16 @@ data class Comment @JvmOverloads constructor(
         val createdDate: LocalDateTime = LocalDateTime.now(),
         val updatedDate: LocalDateTime = LocalDateTime.now(),
 
-        @ManyToOne(fetch = FetchType.LAZY)
+        @ManyToOne(fetch = FetchType.EAGER)
         @JoinColumn(name = "user_id", referencedColumnName = "id")
+        @JsonIgnore
         val author: User,
 
-        @ManyToOne(fetch = FetchType.LAZY)
+        @ManyToOne(fetch = FetchType.EAGER)
         @JoinColumn(name = "post_id", referencedColumnName = "id")
         val post: Post,
 
         @OneToMany(mappedBy = "comment", fetch = FetchType.LAZY, cascade = [CascadeType.ALL])
-        @JsonIgnore
         val subComments: List<SubComment>? = ArrayList()
 
 ) {

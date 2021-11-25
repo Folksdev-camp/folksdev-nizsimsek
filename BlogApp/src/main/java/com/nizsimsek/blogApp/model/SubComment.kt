@@ -1,5 +1,6 @@
 package com.nizsimsek.blogApp.model
 
+import com.fasterxml.jackson.annotation.JsonIgnore
 import org.hibernate.Hibernate
 import org.hibernate.annotations.GenericGenerator
 import java.time.LocalDateTime
@@ -25,12 +26,14 @@ data class SubComment @JvmOverloads constructor(
         val createdDate: LocalDateTime = LocalDateTime.now(),
         val updatedDate: LocalDateTime = LocalDateTime.now(),
 
-        @ManyToOne(fetch = FetchType.LAZY)
+        @ManyToOne(fetch = FetchType.EAGER)
         @JoinColumn(name = "user_id", referencedColumnName = "id")
+        @JsonIgnore
         val author: User,
 
-        @ManyToOne(fetch = FetchType.LAZY)
+        @ManyToOne(fetch = FetchType.EAGER)
         @JoinColumn(name = "comment_id", referencedColumnName = "id")
+        @JsonIgnore
         val comment: Comment
 
 ) {

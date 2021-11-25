@@ -32,15 +32,14 @@ data class Post @JvmOverloads constructor(
                 joinColumns = [JoinColumn(name = "post_id", referencedColumnName = "id")],
                 inverseJoinColumns = [JoinColumn(name = "category_id", referencedColumnName = "id")]
         )
-        @JsonIgnore
         val category: List<Category>,
 
-        @ManyToOne(fetch = FetchType.LAZY)
+        @ManyToOne(fetch = FetchType.EAGER)
         @JoinColumn(name = "user_id", referencedColumnName = "id")
+        @JsonIgnore
         val author: User,
 
         @OneToMany(mappedBy = "post", fetch = FetchType.LAZY, cascade = [CascadeType.ALL])
-        @JsonIgnore
         val comments: List<Comment>? = ArrayList()
 
 ) {
